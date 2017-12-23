@@ -26,7 +26,17 @@ exports.config = {
       // }
     },
     stylesheets: {
-      joinTo: 'css/app.css'
+      joinTo: 'css/app.css',
+      order: {
+        before: [
+          'node_modules/element-ui/lib/theme-chalk/index.css',
+          'web/static/css/bootstrap.css',
+          'web/static/css/admin_lte.css'
+        ],
+        after: [
+          'web/static/css/app.css'
+        ]
+      }
     },
     templates: {
       joinTo: 'js/app.js'
@@ -56,7 +66,7 @@ exports.config = {
   plugins: {
     babel: {
       // Do not use ES6 compiler in vendor code
-      ignore: [/web\/static\/vendor/]
+      ignore: [/(web\/static\/vendor)|node_modules/]
     },
     vue: {
       extractCSS: true,
@@ -92,6 +102,9 @@ exports.config = {
       onClickOutside: 'vue-on-click-outside',
       VueDraggable: 'vuedraggable'
 
+    },
+    styles: {
+      'element-ui':  ['lib/theme-chalk/index.css']
     },
     // Whitelist the npm deps to be pulled in as front-end assets.
     // All other deps in package.json will be excluded from the bundle.
