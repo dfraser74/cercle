@@ -21,13 +21,10 @@ import moment from 'moment';
 // paths './socket' or full ones 'web/static/js/socket'.
 
 import socket from './socket';
-import contactImport from './contact_import';
-import blueimpFileUpload from './blueimp_file_upload';
 import tagEdit from './tag_edit';
 import { directive as onClickOutside } from 'vue-on-click-outside';
 import linkify from 'vue-linkify';
 import VueRouter from 'vue-router';
-
 Vue.use(VueRouter);
 Vue.directive('linkified', linkify);
 Vue.directive('on-click-outside', onClickOutside);
@@ -56,7 +53,6 @@ export var App = {
 import elementLang from 'element-ui/lib/locale/lang/en';
 import elementLocale from 'element-ui/lib/locale';
 elementLocale.use(elementLang);
-
 Vue.use(require('vue-moment'));
 Vue.use(VueResource);
 Vue.use(VueResourceCaseConverter, {
@@ -101,6 +97,8 @@ import SettingsCompanies from '../components/settings/companies/list.vue';
 import SettingsNewCompany from '../components/settings/companies/new.vue';
 import SettingsEditCompany from '../components/settings/companies/edit.vue';
 import SettingsTeam from '../components/settings/team.vue';
+import ImportContacts from '../components/import.vue';
+
 Vue.use(require('vue-autosize'));
 const NotificationBus = new Vue();
 Object.defineProperty(Vue.prototype, '$notification', {
@@ -324,6 +322,12 @@ if ($('.main-app').length > 0) {
       path: '/company/:companyId/settings/team_edit',
       name: 'settings-team-edit',
       component: SettingsTeam,
+      props: true
+    },
+    {
+      path: '/company/:companyId/import',
+      name: 'contacts-import',
+      component: ImportContacts,
       props: true
     }
   ];
