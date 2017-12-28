@@ -75,9 +75,9 @@ exports.config = {
       mode: 'native' // This is the important part!
     },
     copycat: {
-      "fonts": [
-        "node_modules/element-ui/lib/theme-chalk/fonts",
-        "node_modules/bootstrap/fonts",
+      'fonts': [
+        'node_modules/element-ui/lib/theme-chalk/fonts',
+        'node_modules/bootstrap/fonts'
       ]
     }
   },

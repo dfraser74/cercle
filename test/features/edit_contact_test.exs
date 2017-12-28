@@ -11,7 +11,7 @@ defmodule CercleApi.EditContactTest do
     session
     |> sign_in(user.login, "1234")
     |> visit("/company/#{company.id}/contact")
-    |> click(css("td", text: "TestContact 1"))
+    |> click(css("a.contact-link", text: "TestContact 1"))
     |> click(css(".contact-modal span.full-name", text: "TestContact 1"))
     |> fill_in(css(".name-edit-modal input.fname"), with: "Jimi")
     |> fill_in(css(".name-edit-modal input.lname"), with: "Hendrix")

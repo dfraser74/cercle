@@ -39,13 +39,18 @@ defmodule CercleApi.AddTaskToCardTest do
     end)
     |> assert_has(css("body.async-ready"))
     |> click(css(".todo-assigment-placeholder-text"))
+
     |> find(css(".input-modal.assignment-modal"), fn(modal) ->
       modal
+
+      |> click(css("[placeholder='Select date']"))
+      |> fill_in(css("[placeholder='Select date']"), with: Timex.format!(Timex.today, "%F", :strftime))
       |> click(css("td.today"))
       |> click(css("[placeholder='Select time']"))
       |> fill_in(css("[placeholder='Select time']"), with: "21:00:00")
       |> click(button("Save"))
     end)
+    |> take_screenshot
     task = Repo.get_by(Activity, card_id: card.id)
     assert Timex.format!(task.due_date, "%F %T", :strftime) ==
       Timex.format!(Timex.today, "%F 20:00:00", :strftime)
