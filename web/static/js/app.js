@@ -21,13 +21,10 @@ import moment from 'moment';
 // paths './socket' or full ones 'web/static/js/socket'.
 
 import socket from './socket';
-import contactImport from './contact_import';
-import blueimpFileUpload from './blueimp_file_upload';
 import tagEdit from './tag_edit';
 import { directive as onClickOutside } from 'vue-on-click-outside';
 import linkify from 'vue-linkify';
 import VueRouter from 'vue-router';
-
 Vue.use(VueRouter);
 Vue.directive('linkified', linkify);
 Vue.directive('on-click-outside', onClickOutside);
@@ -56,7 +53,6 @@ export var App = {
 import elementLang from 'element-ui/lib/locale/lang/en';
 import elementLocale from 'element-ui/lib/locale';
 elementLocale.use(elementLang);
-
 Vue.use(require('vue-moment'));
 Vue.use(VueResource);
 Vue.use(VueResourceCaseConverter, {
@@ -95,12 +91,15 @@ import GlModalWindow from '../components/shared/glmodal.vue';
 import GlAttachmentPreview from '../components/shared/glpreview.vue';
 import UserNavBar from '../components/shared/navbar.vue';
 import CardPage from '../components/cards/show.vue';
+import SettingsSidebar from '../components/settings/sidebar.vue';
 import ProfileSettingsPage from '../components/settings/profile.vue';
 import SettingsApiKeyPage from '../components/settings/api_key.vue';
 import SettingsCompanies from '../components/settings/companies/list.vue';
 import SettingsNewCompany from '../components/settings/companies/new.vue';
 import SettingsEditCompany from '../components/settings/companies/edit.vue';
 import SettingsTeam from '../components/settings/team.vue';
+import ImportContacts from '../components/import.vue';
+
 Vue.use(require('vue-autosize'));
 const NotificationBus = new Vue();
 Object.defineProperty(Vue.prototype, '$notification', {
@@ -293,38 +292,54 @@ if ($('.main-app').length > 0) {
     {
       path: '/company/:companyId/settings/profile',
       name: 'profilePage',
-      component: ProfileSettingsPage,
-      props: true
+      components:
+      {
+        default: ProfileSettingsPage,
+        'settings-sidebar': SettingsSidebar
+      },
+      props: {
+        default: true,
+        'settings-sidebar': true
+      }
     },
     {
       path: '/company/:companyId/settings/api_key',
       name: 'settings-api-key',
-      component: SettingsApiKeyPage,
-      props: true
+      components: {
+        default: SettingsApiKeyPage,
+        'settings-sidebar': SettingsSidebar
+      },
+      props: { default: true, 'settings-sidebar': true }
     },
     {
       path: '/company/:companyId/settings/companies',
       name: 'settings-companies',
-      component: SettingsCompanies,
-      props: true
+      components: { default: SettingsCompanies, 'settings-sidebar': SettingsSidebar },
+      props: { default: true, 'settings-sidebar': true }
     },
     {
       path: '/company/:companyId/settings/companies/new',
       name: 'settings-new-company',
-      component: SettingsNewCompany,
-      props: true
+      components: { default:  SettingsNewCompany,'settings-sidebar': SettingsSidebar },
+      props: { default: true, 'settings-sidebar': true }
     },
     {
       path: '/company/:companyId/settings/companies/:id/edit',
       name: 'settings-edit-company',
-      component: SettingsEditCompany,
-      props: true
+      components: { default: SettingsEditCompany,'settings-sidebar': SettingsSidebar },
+      props: { default: true, 'settings-sidebar': true }
     },
     {
       path: '/company/:companyId/settings/team_edit',
       name: 'settings-team-edit',
-      component: SettingsTeam,
-      props: true
+      components: { default: SettingsTeam,'settings-sidebar': SettingsSidebar },
+      props: { default: true, 'settings-sidebar': true }
+    },
+    {
+      path: '/company/:companyId/import',
+      name: 'contacts-import',
+      components: { default: ImportContacts,'settings-sidebar': SettingsSidebar },
+      props: { default: true, 'settings-sidebar': true }
     }
   ];
   const router = new VueRouter({

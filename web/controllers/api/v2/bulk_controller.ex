@@ -39,11 +39,12 @@ defmodule CercleApi.APIV2.BulkController do
           organization = Repo.insert!(changeset)
           contact_params = Map.put(contact_params, "organization_id", organization.id)
         end
-
-        if contact_params["id"] do
-          ext_contact = Repo.get_by(Contact, id: contact_params["id"], company_id: company.id)
-        else contact_params["email"]
-          ext_contact = Repo.get_by(Contact, email: contact_params["email"], company_id: company.id)
+        cond do
+          contact_params["id"] ->
+            ext_contact = Repo.get_by(Contact, id: contact_params["id"], company_id: company.id)
+          contact_params["email"] ->
+            ext_contact = Repo.get_by(Contact, email: contact_params["email"], company_id: company.id)
+          true -> :ok
         end
 
         if ext_contact do

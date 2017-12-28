@@ -25,7 +25,7 @@
 
         </div>
         <div class="box-footer">
-          <el-button type="primary" @click="save()" class="btn btn-primary pull-right">Save</el-button>
+          <el-button type="primary" @click="save()" class="pull-right" size="mini">Save</el-button>
         </div>
       </el-form>
     </div>

@@ -29,7 +29,6 @@ exports.config = {
       joinTo: 'css/app.css',
       order: {
         before: [
-          'node_modules/element-ui/lib/theme-chalk/index.css',
           'web/static/css/bootstrap.css',
           'web/static/css/admin_lte.css'
         ],
@@ -74,9 +73,14 @@ exports.config = {
     },
     sass: {
       mode: 'native' // This is the important part!
+    },
+    copycat: {
+      'fonts': [
+        'node_modules/element-ui/lib/theme-chalk/fonts',
+        'node_modules/bootstrap/fonts'
+      ]
     }
   },
-
   modules: {
     autoRequire: {
       'js/app.js': ['web/static/js/app']
@@ -100,11 +104,12 @@ exports.config = {
       VueAutosize: 'vue-autosize',
       FileUpload: 'vue-upload-component',
       onClickOutside: 'vue-on-click-outside',
-      VueDraggable: 'vuedraggable'
+      VueDraggable: 'vuedraggable',
+      VueDragDrop: 'vue-drag-drop'
 
     },
     styles: {
-      'element-ui':  ['lib/theme-chalk/index.css']
+      'element-ui':  ['packages/theme-chalk/src/index.scss']
     },
     // Whitelist the npm deps to be pulled in as front-end assets.
     // All other deps in package.json will be excluded from the bundle.
