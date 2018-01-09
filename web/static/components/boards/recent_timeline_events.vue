@@ -3,7 +3,7 @@
     <h3 class="control-sidebar-heading">Activity</h3>
     <ul class="control-sidebar-menu">
       <component
-        v-bind:is="item.eventName"
+        v-bind:is="messageComponent(item.eventName)"
         v-for="item in items"
         :item="item"
         v-on:clickByEvent="clickByEvent(item)" />
@@ -32,12 +32,15 @@ export default {
   },
   components: {
     'comment': CommentMessage,
-    'card.created': CardCreatedMessage,
-    'card.updated': CardUpdatedMessage,
+    'card_created': CardCreatedMessage,
+    'card_updated': CardUpdatedMessage,
     'modal': VueStrap.modal,
     'contact-show': ContactShow
   },
   methods: {
+    messageComponent(eventName) {
+      return eventName.replace(/\./g, '_');
+    },
     clickByEvent(event) {
       if (event.cardId) {
         let cardUrl = '/company/' + Vue.currentUser.companyId + '/board/' + this.board_id + '/card/' + event.cardId;

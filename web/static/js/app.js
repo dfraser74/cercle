@@ -195,7 +195,7 @@ if (document.querySelector('meta[name="guardian_token"]')) {
 }
 
 // Vue apps
-if ($('#user-navbar').length > 0) {
+if (document.querySelector('#user-navbar')) {
   new Vue({
     el: '#user-navbar',
     components: {
@@ -204,7 +204,7 @@ if ($('#user-navbar').length > 0) {
   });
 }
 
-if ($('.main-app').length > 0) {
+if (document.querySelector('.main-app')) {
   const routes = [
     {
       path: '/company/:company_id/board',
@@ -368,7 +368,7 @@ if ($('.main-app').length > 0) {
   }).$mount('.main-app');
 }
 
-if ($('#notification-app').length > 0) {
+if (document.querySelector('#notification-app')) {
   new Vue({
     el: '#notification-app',
     components: {
@@ -377,20 +377,24 @@ if ($('#notification-app').length > 0) {
   });
 }
 
-if ($('#global-modal-window').length > 0) {
+if (document.querySelector('#global-modal-window')) {
   new Vue({
     el: '#global-modal-window',
     components: { 'glmodal': GlModalWindow },
     mounted() {
       window.addEventListener('keyup', (event) => {
-        if (event.keyCode === 27) { if(!$('#global-attachment-preview').is(':visible')){this.$emit('esc-keyup');} }
+        if (event.keyCode === 27) {
+          if(document.querySelector('#global-attachment-preview')){
+            this.$emit('esc-keyup');
+          }
+        }
       });
     }
 
   });
 }
 
-if ($('#global-attachment-preview').length > 0) {
+if (document.querySelector('#global-attachment-preview')) {
   new Vue({
     el: '#global-attachment-preview',
     components: { 'gl-attachment-preview': GlAttachmentPreview },
@@ -404,6 +408,6 @@ if ($('#global-attachment-preview').length > 0) {
 // end - Vue apps
 
 // Login page
-if ($('#session_time_zone').length > 0) {
-  $('#session_time_zone').val(jsTz.determine().name());
+if (document.querySelector('#session_time_zone')) {
+  document.querySelector('#session_time_zone').value = jsTz.determine().name();
 }
