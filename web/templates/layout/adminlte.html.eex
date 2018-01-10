@@ -57,7 +57,6 @@
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <%= if (@conn.assigns[:current_user].id) do %>
       <%= if Mix.env == :prod do %>
-     <script type="text/javascript" src="//storage.googleapis.com/instapage-assets/conversion-external.js"></script><iframe class="instapage-noscrap" src="//d3mwhxgzltpnyp.cloudfront.net/local-storage/index.html" name="instapage-local-storage" height="0px" width="0px" onload="(function() { InstapageExternalConversion(5479756); })();" style="display: block;"></iframe>
     <script>
       window.intercomSettings = {
       app_id: "mkbrkdwj",
