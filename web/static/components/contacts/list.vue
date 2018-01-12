@@ -2,7 +2,7 @@
   <div>
     <!-- Content Header (Page header) -->
     <section class="content-header" style="margin-top:20px;margin-bottom:20px;">
-      <h2>People<br /> <span style="font-size:16px;color:grey;">{{contacts.length}} contacts</span></h2>
+      <h2>People<br /> <span style="font-size:16px;color:grey;">{{totalContacts}} contacts</span></h2>
 
       <div class="row">
         <div class="col-xs-6">
