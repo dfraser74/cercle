@@ -475,7 +475,6 @@
       archiveCard() {
         let url = '/api/v2/company/'+ Vue.currentUser.companyId +'/card/' + this.cardId;
         this.$http.put(url, { card: { status: '1'} }).then(resp => {
-          $('.portlet[data-id=' + this.cardId + ']').hide();
           this.card = resp.data.data;
         });
       },
@@ -483,7 +482,6 @@
       unarchiveCard() {
         let url = '/api/v2/company/'+ Vue.currentUser.companyId +'/card/' + this.cardId;
         this.$http.put(url, { card: { status: '0'} }).then(resp => {
-          $('.portlet[data-id=' + this.cardId + ']').show();
           this.card = resp.data.data;
         });
       },

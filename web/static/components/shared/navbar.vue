@@ -4,22 +4,22 @@
     <!-- User Account Menu -->
     <li class="tasks-menu">
       <a href="https://intercom.help/cercle"  aria-expanded="false" target="_blank">
-        <i class="fa fa-question-circle"></i> 
+        <i class="fa fa-question-circle"></i>
         &nbsp;
         Help
       </a>
     </li>
     <li class="dropdown user user-menu">
       <!-- Menu Toggle Button -->
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" v-on:click="displayMenu = !displayMenu">
         <!-- The user image in the navbar-->
         <img v-if="user.profile_image_url" :src="user.profile_image_url" class="user-image">
         <img v-else class="user-image" src="/images/pp_2.png">
         <!-- hidden-xs hides the username on small devices so only the image appears. -->
         <span class="hidden-xs">{{user.full_name}} (<span class="current-company">{{company.title}}</span>)</span>
       </a>
-
-      <ul class="dropdown-menu">
+      <transition name="slide-fade">
+      <ul class="dropdown-menu" v-show="displayMenu">
         <!-- The user image in the menu -->
         <li class="user-header">
           <img v-if="user.profile_image_url" :src="user.profile_image_url" class="img-circle">
@@ -49,7 +49,7 @@
           </div>
         </li>
       </ul>
-
+      </transition>
     </li>
 
   </ul>
@@ -58,7 +58,9 @@
   export default {
     props: ['user', 'company', 'companies'],
     data() {
-      return {};
+      return {
+        displayMenu: false
+      };
     },
     methods: {
       settingsUrl() {
@@ -75,7 +77,11 @@
 </script>
 
 <style lang="sass">
-  .user-navbar {
+
+.user-navbar {
+  .dropdown-menu {
+    display: block;
+    }
     .current-company {
       img {
         margin-right:5px;

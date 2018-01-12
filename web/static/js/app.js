@@ -21,7 +21,6 @@ import moment from 'moment';
 // paths './socket' or full ones 'web/static/js/socket'.
 
 import socket from './socket';
-import tagEdit from './tag_edit';
 import { directive as onClickOutside } from 'vue-on-click-outside';
 import linkify from 'vue-linkify';
 import VueRouter from 'vue-router';
@@ -93,6 +92,7 @@ import UserNavBar from '../components/shared/navbar.vue';
 import CardPage from '../components/cards/show.vue';
 import SettingsSidebar from '../components/settings/sidebar.vue';
 import ProfileSettingsPage from '../components/settings/profile.vue';
+import SettingsTags from '../components/settings/tag.vue';
 import SettingsApiKeyPage from '../components/settings/api_key.vue';
 import SettingsCompanies from '../components/settings/companies/list.vue';
 import SettingsNewCompany from '../components/settings/companies/new.vue';
@@ -195,15 +195,6 @@ if (document.querySelector('meta[name="guardian_token"]')) {
 }
 
 // Vue apps
-if (document.querySelector('#user-navbar')) {
-  new Vue({
-    el: '#user-navbar',
-    components: {
-      'navbar': UserNavBar
-    }
-  });
-}
-
 if (document.querySelector('.main-app')) {
   const routes = [
     {
@@ -303,6 +294,15 @@ if (document.querySelector('.main-app')) {
       }
     },
     {
+      path: '/company/:companyId/settings/tags_edit',
+      name: 'settings-tags-edit',
+      components: {
+        default: SettingsTags,
+        'settings-sidebar': SettingsSidebar
+      },
+      props: { default: true, 'settings-sidebar': true }
+    },
+    {
       path: '/company/:companyId/settings/api_key',
       name: 'settings-api-key',
       components: {
@@ -360,6 +360,7 @@ if (document.querySelector('.main-app')) {
       classContainer() { return this.$route.meta.classContainer || 'container';  },
       classWrapper () { return this.$route.meta.classWrapper; }
     },
+    components: { 'navbar': UserNavBar   },
     mounted() {
       window.addEventListener('keyup', (event) => {
         if (event.keyCode === 27) { this.$emit('esc-keyup'); }
@@ -384,7 +385,7 @@ if (document.querySelector('#global-modal-window')) {
     mounted() {
       window.addEventListener('keyup', (event) => {
         if (event.keyCode === 27) {
-          if(document.querySelector('#global-attachment-preview')){
+          if(document.querySelector('#global-modal-window')){
             this.$emit('esc-keyup');
           }
         }
