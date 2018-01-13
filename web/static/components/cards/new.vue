@@ -1,9 +1,17 @@
 <template>
   <div class="new-card-form" v-on:keydown.enter="saveData">
     <div class="form-group">
-      <input type="text" title="Name of the Card" v-model="name" placeholder="Name of the Card" class="form-control card-name" ref="name" v-if="type === 0" />
+      <input type="text" title="Name of the Card"
+             v-model="name"
+             placeholder="Name of the Card"
+             class="form-control card-name"
+             ref="name"
+             v-if="type === 0" />
 
-      <add-contact @select-contact="selectContact" ref='addContact' v-if="type === 1" />
+      <add-contact
+        @select-contact="selectContact"
+        ref='addContact'
+        v-if="type === 1" />
     </div>
 
     <div class="form-group">

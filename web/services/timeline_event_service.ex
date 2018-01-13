@@ -5,15 +5,15 @@ defmodule CercleApi.TimelineEventService do
 
   use CercleApi.Web, :service
 
-  alias CercleApi.{TimelineEvent}
+  alias CercleApi.{Endpoint}
 
   def create(event) do
     with event <- Repo.preload(event, [:user, :card]) do
-      CercleApi.Endpoint.broadcast!(
+      Endpoint.broadcast!(
         "cards:"  <> to_string(event.card_id),
         "timeline_event:created", %{"event" => event}
       )
-      CercleApi.Endpoint.broadcast!(
+      Endpoint.broadcast!(
         "board:" <> to_string(event.card.board_id),
         "timeline_event:created",
         CercleApi.APIV2.TimelineEventView.render(
@@ -24,11 +24,11 @@ defmodule CercleApi.TimelineEventService do
 
   def update(event) do
     with event <- Repo.preload(event, [:user, :card]) do
-      CercleApi.Endpoint.broadcast!(
+      Endpoint.broadcast!(
         "cards:"  <> to_string(event.card_id),
         "timeline_event:updated", %{"event" => event}
       )
-      CercleApi.Endpoint.broadcast!(
+      Endpoint.broadcast!(
         "board:" <> to_string(event.card.board_id),
         "timeline_event:updated",
         CercleApi.APIV2.TimelineEventView.render(
@@ -39,11 +39,11 @@ defmodule CercleApi.TimelineEventService do
 
   def delete(event) do
     with event <- Repo.preload(event, [:user, :card]) do
-      CercleApi.Endpoint.broadcast!(
+      Endpoint.broadcast!(
         "cards:"  <> to_string(event.card_id),
         "timeline_event:deleted", %{"id" => event.id}
       )
-      CercleApi.Endpoint.broadcast!(
+      Endpoint.broadcast!(
         "board:" <> to_string(event.card.board_id),
         "timeline_event:deleted", %{"id" => event.id}
       )

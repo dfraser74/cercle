@@ -64,20 +64,16 @@ defmodule CercleApi.CardService do
       data: payload_data(card)
     }
 
-    
     with channel <- "cards:"  <> to_string(card.id),
       do: CercleApi.Endpoint.broadcast!(
             channel, "card:created", %{
               "card" => CercleApi.APIV2.CardView.card_json(card)
             }
           )
-    
 
     changeset = event_changeset(user, event, card,
       event_payload(card, %{action: :create_card}))
-
     with {:ok, tm_event} <- Repo.insert(changeset),
-         {event} <- Repo.preload(tm_event, [:card, :user]),
       do: CercleApi.TimelineEventService.create(tm_event)
 
     Board
@@ -118,7 +114,7 @@ defmodule CercleApi.CardService do
           event <- Repo.preload(tm_event, [:card, :user]),
         do: CercleApi.TimelineEventService.update(event)
     end
-    
+
     Board
     |> Repo.get(card.board_id)
     |> Repo.preload([board_columns: Board.preload_query])
