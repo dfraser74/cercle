@@ -50,6 +50,7 @@ You can use Zapier to do Marketing Automation. Move a People Card into a new col
 
 ### V1.3 - December 2017
 - Update version of Vuejs
+- Remove Jquery dependency
 - Add Pagination to Contact page
 - Minor Bug Fixes
 
