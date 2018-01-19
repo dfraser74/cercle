@@ -48,6 +48,11 @@ You can use Zapier to do Marketing Automation. Move a People Card into a new col
 
 ## Changelog
 
+### V1.3 - December 2017
+- Update version of Vuejs
+- Add Pagination to Contact page
+- Minor Bug Fixes
+
 ### V1.2.2 - October 2017
 - Email API for Contact
 - People Board & Project Board
