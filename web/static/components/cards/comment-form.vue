@@ -68,7 +68,7 @@
         let textCusrsor = this.$refs.commentMessage.selectionStart;
         let startMsg = valueMessage.substring(0, textCusrsor);
         let endMsg = valueMessage.substring(textCusrsor);
-        let startIndex = [...startMsg].reverse().join('').split(' ')[0].indexOf('@');
+        let startIndex = startMsg.split('').reverse().join('').split(' ')[0].indexOf('@');
         let prefix = '@';
         if (startIndex !== -1) {
           startMsg = startMsg.substring(0, startMsg.length - (startIndex + 1));
