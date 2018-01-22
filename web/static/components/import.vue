@@ -216,7 +216,7 @@
         fileId: null,
         previewHeaders: [],
         previewValues: []
-      }
+      };
     },
     components: {
       'vue-draggable': VueDraggable,
@@ -226,15 +226,15 @@
       disableNextStep() {
         if (this.step === 0 ) {
           return this.disableUpload;
-        };
+        }
 
         if (this.step === 1 ) {
           return !this.completedMapping();
-        };
+        }
 
         if (this.step === 2 ) {
           return false;
-        };
+        }
       }
 
     },
@@ -250,21 +250,21 @@
       },
       back() {
         if (this.step === 2 ) {
-          this.step = 1
+          this.step = 1;
         } else if (this.step === 1 ) {
           this.disableUpload = true;
-          this.step = 0
-        };
+          this.step = 0;
+        }
       },
 
       finishStep() {
-        let url = "/company/" + this.companyId + "/create_nested_data";
+        let url = '/company/' + this.companyId + '/create_nested_data';
         let mappedData = { contact: {}, organization: {} };
 
-        let completedFields = this.$_.filter(this.mappingFields, (v) => { return !this.$_.isEmpty(v.mapping) });
+        let completedFields = this.$_.filter(this.mappingFields, (v) => { return !this.$_.isEmpty(v.mapping); });
         this.$_.forEach(completedFields, (item) => {
           mappedData[item.mapping.type][item.mapping.field] = item.field;
-        })
+        });
 
         this.$http.post(
           url,
@@ -275,16 +275,16 @@
           window.location = '/company/'+this.companyId+'/contact';
         }, (error) => {
           this.$message.error('Some error occured, Please try again.');
-        })
+        });
       },
       previewStep() {
-        let url = "/company/" + this.companyId + "/view_uploaded_data";
+        let url = '/company/' + this.companyId + '/view_uploaded_data';
         let mappedData = { contact: {}, organization: {} };
 
-        let completedFields = this.$_.filter(this.mappingFields, (v) => { return !this.$_.isEmpty(v.mapping) });
+        let completedFields = this.$_.filter(this.mappingFields, (v) => { return !this.$_.isEmpty(v.mapping); });
         this.$_.forEach(completedFields, (item) => {
           mappedData[item.mapping.type][item.mapping.field] = item.field;
-        })
+        });
 
         this.$http.post(
           url,
@@ -292,26 +292,26 @@
           {headers: {'x-csrf-token': window.csrfToken}}
         ).then( (resp) => {
           window.w = resp;
-          this.previewValues = resp.data.contact_values.concat(resp.data.organization_values)
-          this.previewHeaders = resp.data.contact_headers.concat(resp.data.organization_headers)
+          this.previewValues = resp.data.contact_values.concat(resp.data.organization_values);
+          this.previewHeaders = resp.data.contact_headers.concat(resp.data.organization_headers);
           this.step = 2;
-        })
+        });
       },
       completedMapping() {
         let completedFields = this.$_.map(
-          this.$_.filter(this.mappingFields, (v) => { return !this.$_.isEmpty(v.mapping) }),
-          (n) => { return  n.mapping.type + '_' + n.mapping.field }
+          this.$_.filter(this.mappingFields, (v) => { return !this.$_.isEmpty(v.mapping); }),
+          (n) => { return  n.mapping.type + '_' + n.mapping.field; }
         );
-        let mappedContactName = this.$_.includes(completedFields, 'contact_full_name') || (
-          this.$_.includes(completedFields, 'contact_first_name') &&
-            this.$_.includes(completedFields, 'contact_last_name')
-        );
+        let mappedContactName = this.$_.includes(completedFields, 'contact_full_name') || 
+        this.$_.includes(completedFields, 'contact_first_name') &&
+          this.$_.includes(completedFields, 'contact_last_name')
+      ;
         let mappedOrganizationName = this.$_.includes(completedFields, 'organization_name');
         return mappedContactName && mappedOrganizationName;
 
       },
       sortList(list) {
-         return this.$_.orderBy(list)
+        return this.$_.orderBy(list);
       },
       unMapField(item) {
         if (item.mapping.type === 'contact') {
@@ -320,19 +320,19 @@
         if (item.mapping.type === 'organization') {
           this.organizationFields.push(item.mapping.field);
         }
-        item.mapping = {}
+        item.mapping = {};
       },
       mappedField(item) {
         return !this.$_.isEmpty(item.mapping);
       },
       handleDrop(item, data) {
-        window.w = this
+        window.w = this;
         if (data.type === 'contact') {
           this.contactFields.splice(this.contactFields.indexOf(data.field), 1);
           if (!this.$_.isEmpty(item.mapping)) {
             this.contactFields.push(item.mapping.field);
           }
-          item.mapping = { type: 'contact', field: data.field }
+          item.mapping = { type: 'contact', field: data.field };
         }
 
         if (data.type === 'organization') {
@@ -340,7 +340,7 @@
           if (!this.$_.isEmpty(item.mapping)) {
             this.organizationFields.push(item.mapping.field);
           }
-          item.mapping = { type: 'organization', field: data.field }
+          item.mapping = { type: 'organization', field: data.field };
         }
       },
       handleUploaded(resp, file, fileList) {
@@ -348,21 +348,21 @@
         this.organizationFields = resp.organization_fields;
         this.mappingFields = this.$_.map(
           this.$_.zip(resp.headers, resp.first_row), (h) => {
-            return { field: h[0], example: h[1],  mapping: {  } }
+            return { field: h[0], example: h[1],  mapping: {  } };
           });
         this.fileId = resp.temp_file;
-        this.step = 1
+        this.step = 1;
 
       },
       cancelImport() {
-        window.location.href = '/company/' + this.companyId + '/contact'
+        window.location.href = '/company/' + this.companyId + '/contact';
       },
       handleRemove(_, files){
         this.disableUpload = true;
       },
       selectFile(file, files) {
-        this.$refs.upload.clearFiles()
-        this.$refs.upload.uploadFiles = [file]
+        this.$refs.upload.clearFiles();
+        this.$refs.upload.uploadFiles = [file];
         this.disableUpload = false;
       },
       submitUpload() {

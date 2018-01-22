@@ -65,45 +65,45 @@
         inviteForm: { email: null },
         company: {},
         users: []
-      }
+      };
     },
     computed: {
       disabledInvite() {
-        return this.$_.isEmpty(this.inviteForm.email)
+        return this.$_.isEmpty(this.inviteForm.email);
       }
     },
     methods: {
       invite() {
-        let url = "/api/v2/company/" + this.companyId + "/settings/team/invitation";
+        let url = '/api/v2/company/' + this.companyId + '/settings/team/invitation';
         this.$http.post(url, { user: { email: this.inviteForm.email }}).then(resp => {
           this.inviteForm.email = null;
           this.$message({
             message: 'Invitation link sent successfully!',
             type: 'success'
           });
-        })
+        });
       },
       deleteMember(user) {
         if(confirm('Are you sure?')) {
-          let url = "/api/v2/company/" + this.companyId + "/settings/team/" + user.id;
+          let url = '/api/v2/company/' + this.companyId + '/settings/team/' + user.id;
           this.$http.delete(url).then(resp => {
             let userIndex = this.users.findIndex(function(u){
               return u.id === user.id;
             });
 
             this.users.splice(userIndex, 1);
-          })
+          });
         }
       },
-      canRemove(user) { return !Vue.currentUser.eq(user.id) },
+      canRemove(user) { return !Vue.currentUser.eq(user.id); },
       fetchData() {
-        let url = "/api/v2/companies/" + this.companyId;
+        let url = '/api/v2/companies/' + this.companyId;
         this.$http.get(url).then(resp => {
-          this.company = resp.data.data
+          this.company = resp.data.data;
         });
-        let userUrl = "/api/v2/company/" + this.companyId + "/company/users";
+        let userUrl = '/api/v2/company/' + this.companyId + '/company/users';
         this.$http.get(userUrl).then(resp => {
-          this.users = resp.data.users
+          this.users = resp.data.users;
         });
       }
     },

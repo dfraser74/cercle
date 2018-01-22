@@ -123,7 +123,7 @@ end
 defimpl Poison.Encoder, for: CercleApi.User do
   def encode(model, options) do
     model
-    |> Map.take([:id, :full_name, :name, :profile_image])
+    |> Map.take([:id, :full_name, :username, :profile_image])
     |> Map.put(:profile_image_url, CercleApi.UserProfileImage.url({model.profile_image, model}, :small))
     |> Poison.Encoder.encode(options)
   end

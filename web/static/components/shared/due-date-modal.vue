@@ -73,7 +73,7 @@
       },
       save() {
         // Following hack is required because, inline datetime picker doesnt emit instantly when date is picked
-        let datetimeInputs = this.$el.querySelectorAll('.el-picker-panel__body input')
+        let datetimeInputs = this.$el.querySelectorAll('.el-picker-panel__body input');
         let datetime = datetimeInputs[0].value + ' ' + datetimeInputs[1].value;
 
         this.$emit('input', datetime);

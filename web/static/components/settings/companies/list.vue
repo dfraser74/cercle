@@ -51,8 +51,8 @@
     data() { return { companies: [] };  },
     methods: {
       fetchCompanies() {
-        let url = "/api/v2/companies";
-        this.$http.get(url).then(resp => { this.companies = resp.data.data });
+        let url = '/api/v2/companies';
+        this.$http.get(url).then(resp => { this.companies = resp.data.data; });
       }
     },
     computed: {

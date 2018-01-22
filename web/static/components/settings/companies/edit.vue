@@ -38,7 +38,7 @@
       return {
         previewImage: null,
         company: {}
-      }
+      };
     },
     methods: {
       chooseImage(e) {
@@ -73,19 +73,19 @@
             }
             let url = '/api/v2/companies/' + this.id;
             this.$http.put(url, formData).then(resp => {
-              this.$router.push("/company/" + this.companyId + "/settings/companies/");
-            })
+              this.$router.push('/company/' + this.companyId + '/settings/companies/');
+            });
           } else {
             return false;
           }
-        })
+        });
       },
       fetchCompany() {
-        let url = "/api/v2/companies/" + this.id;
+        let url = '/api/v2/companies/' + this.id;
         this.$http.get(url).then(resp => {
-          this.company = resp.data.data
+          this.company = resp.data.data;
           this.previewImage = this.company.logo;
-        })
+        });
       }
     },
     mounted() {
