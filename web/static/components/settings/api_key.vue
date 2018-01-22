@@ -24,32 +24,30 @@
   export default {
     props: ['companyId'],
     data() {
-      return {
-        keys: {}
-      };
+      return {  keys: {} };
     },
     methods: {
       fetchKeys() {
         let url = '/api/v2/company/' + this.companyId + '/settings/api_key';
         this.$http.get(url).then(resp => {
-         this.keys = resp.data.keys
+          this.keys = resp.data.keys;
         });
       }
-  },
-  computed: {
-    postmarkUrl() {
-      return [
-        "https://www.cercle.co/api/v2/company/",
-        this.companyId, "/email?token= ",
-        this.keys.postmarkToken, "&source=postmark"
-      ].join('')
-    }
-  },
+    },
+    computed: {
+      postmarkUrl() {
+        return [
+          'https://www.cercle.co/api/v2/company/',
+          this.companyId, '/email?token= ',
+          this.keys.postmarkToken, '&source=postmark'
+        ].join('');
+      }
+    },
     mounted() {
       this.fetchKeys();
     }
   };
-  </script>
+</script>
 <style lang="sass" scoped>
   textarea {
     width: 100%;

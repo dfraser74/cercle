@@ -133,10 +133,12 @@
           v-on:taskAddOrUpdate="taskAddOrUpdate"
           v-on:taskDelete="taskDelete"
         ></to-do>
-        <comment_form slot="comment-form"
-            :card="card"
-            :userImage="userImage()"
-            v-on:eventAddOrUpdate="eventAddOrUpdate"
+        <comment_form
+          slot="comment-form"
+          :card="card"
+          :userImage="userImage()"
+          :users="companyUsers"
+          v-on:eventAddOrUpdate="eventAddOrUpdate"
         />
         <timeline_events
             slot="timeline-events"

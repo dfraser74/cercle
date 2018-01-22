@@ -72,12 +72,12 @@
             }
 
             this.$http.post('/api/v2/companies', formData).then(resp => {
-              this.$router.push("/company/" + this.companyId + "/settings/companies/");
-            })
+              this.$router.push('/company/' + this.companyId + '/settings/companies/');
+            });
           } else {
             return false;
           }
-        })
+        });
       }
     },
     computed: {

@@ -39,36 +39,36 @@
     props: ['companyId'],
     data() {
       return {
-  tags: []
+        tags: []
       };
     },
-  methods: {
-    updateTag(tag) {
-      let url = '/api/v2/company/' + this.companyId + '/tag/' + tag.id;
-      this.$http.put(url, {tag: {name: tag.name }}).then(resp => {
-        tag.changed = false;
-      })
+    methods: {
+      updateTag(tag) {
+        let url = '/api/v2/company/' + this.companyId + '/tag/' + tag.id;
+        this.$http.put(url, {tag: {name: tag.name }}).then(resp => {
+          tag.changed = false;
+        });
+      },
+      deleteTag(tag) {
+        let url = '/api/v2/company/' + this.companyId + '/tag/' + tag.id;
+        this.$http.delete(url).then(resp => {
+          let tagIndex = this.tags.findIndex((u)=> { return u.id === tag.id; });
+          this.tags.splice(tagIndex, 1);
+        });
+      },
+      fetchTags() {
+        let url = '/api/v2/company/' + this.companyId + '/tag';
+        this.$http.get(url).then(resp => {
+          this.tags = resp.data.data;
+        });
+      }
     },
-    deleteTag(tag) {
-      let url = '/api/v2/company/' + this.companyId + '/tag/' + tag.id;
-      this.$http.delete(url).then(resp => {
-        let tagIndex = this.tags.findIndex((u)=> { return u.id === tag.id; })
-        this.tags.splice(tagIndex, 1);
-      })
-    },
-    fetchTags() {
-      let url = '/api/v2/company/' + this.companyId + '/tag';
-      this.$http.get(url).then(resp => {
-        this.tags = resp.data.data
-      });
+    computed: { },
+    mounted() {
+      this.fetchTags();
     }
-  },
-  computed: { },
-  mounted() {
-    this.fetchTags();
-  }
-};
-</script>
+  };
+  </script>
 <style lang="sass" scoped>
   textarea {
     width: 100%;
