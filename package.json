@@ -5,6 +5,7 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "blueimp-file-upload": "^9.17.0",
     "bootstrap-datepicker": "^1.6.4",
     "brunch": "^2.10.10",
