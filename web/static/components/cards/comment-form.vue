@@ -13,6 +13,7 @@
                   @keydown.self.up="onKeyUpArrow($event)"
                   @keydown.self.down="onKeyDownArrow($event)"
                   @keydown.self.13="onKeyEnter($event)"
+                  @keypress.self="onKeyPress"
                   >
         </textarea>
         <div class="comment-box-options">
@@ -34,9 +35,9 @@
                   ref="usersList"
                   @keyup.self.up="onKeyUpArrow"
                   @keyup.self.down="onKeyDownArrow">
-                <li  v-for="user in users" @click="mentionUser(user)" @keyup.self.enter="mentionUser(user)">
+                <li  v-for="user in mentionUsers" @click="mentionUser(user)" @keyup.self.enter="mentionUser(user)">
                   <img :src="user.profileImageUrl" class='profile-image' />
-                  {{ user.fullName }}
+                  {{ user.fullName }} (@{{user.username}})
                 </li>
               </ul>
             </div>
@@ -58,7 +59,8 @@
       return {
         message: '',
         defaultImg: '/images/pp_2.png',
-        userImg: this.userImage
+        userImg: this.userImage,
+        filterMentionUsers: null
       };
     },
 
@@ -80,11 +82,15 @@
         this.closeMentionList();
       },
       closeMentionList() {
+        let userEls = this.$refs.usersList.querySelectorAll('li');
+        userEls.forEach( (item) => { item.classList.remove('selected'); });
         this.$refs.mentionList.doClose();
       },
       openMentionList() {
-        window.v = this;
+        this.filterMentionUsers = null;
         this.$refs.mentionList.doShow();
+        let userEl = this.$refs.usersList.querySelector('li');
+        if (userEl) { userEl.classList.add('selected'); }
         this.$refs.usersList.querySelector('li').focus();
       },
       onKeyEnter(event) {
@@ -131,11 +137,12 @@
           return false;
         }
       },
-      onKeyUp(v,n) {
-        this.openMentionList();
-        let userEl =this.$refs.usersList.querySelector('li');
-        if (userEl) { userEl.classList.add('selected'); }
+      onKeyPress(v,n) {
+        if (this.$refs.mentionList.showPopper) {
+          if (v.code === 'Space') { this.closeMentionList();  }
+        }
       },
+      onKeyUp(v,n) { this.openMentionList();  },
       sendMessage(){
         let url = '/api/v2/company/' + Vue.currentUser.companyId + '/timeline_events';
         this.$http.post(url, {
@@ -149,7 +156,43 @@
         this.message = '';
       }
     },
-    mounted() { window.v = this; },
+    watch: {
+      message(n, o) {
+        this.filterMentionUsers = null;
+        let valueMessage = n;
+        let textCusrsor = this.$refs.commentMessage.selectionStart;
+        let startMsg = valueMessage.substring(0, textCusrsor);
+        let reverseMsg = startMsg.split('').reverse().join('').split(' ')[0];
+        if ('@' === reverseMsg.slice(-1) && !this.$refs.mentionList.showPopper) {
+          this.openMentionList();
+        }
+        if (this.$refs.mentionList.showPopper) {
+          let userName = reverseMsg.substring(0, reverseMsg.indexOf('@')).split('').reverse().join('');
+          this.filterMentionUsers = userName;
+        }
+      }
+    },
+    computed: {
+      mentionUsers() {
+        if (this.$_.isEmpty(this.filterMentionUsers)) {
+          return this.users;
+        } else {
+          return this.users.filter((v) => {
+            return (
+              0 === v.username.toLowerCase().indexOf(this.filterMentionUsers.toLowerCase()) ||
+              0 === v.fullName.toLowerCase().indexOf(this.filterMentionUsers.toLowerCase())
+            );
+          });
+        }
+      }
+    },
+    mounted() {
+      let vm = this;
+      vm.closeMentionList();
+      vm.$root.$on('esc-keyup', () => {
+        vm.closeMentionList();
+      });
+    },
     components: {
       'el-button': ElementUi.Button,
       'el-popover': ElementUi.Popover
