@@ -1,6 +1,6 @@
 <template>
   <div v-on-click-outside='cancel'>
-    <div class="readonly-text" v-on:click="setEditMode" v-show="!editMode" v-linkified v-html="v || placeholder">
+    <div class="readonly-text" v-on:click="setEditMode" v-show="!editMode" v-html="compiledMarkdown">
     </div>
 
     <div v-show="editMode">
@@ -13,9 +13,9 @@
                   ref='input' v-autosize="rawText" rows="1" />
       </div>
       <div>
-        <button class='btn btn-success' @click='save'>Save</button>
-        <a href="#" @click.stop="remove" class="pull-right">Delete</a>
-        <a href="#" @click.stop="cancel">Cancel</a>
+        <el-button type="success" size="mini" @click='save'>Save</el-button>
+        <el-button type="danger" size="mini" @click.stop='remove' class="pull-right" icon="el-icon-delete"></el-button>
+        <el-button type="text" size="mini" @click.stop='cancel'>Cancel</el-button>
       </div>
     </div>
   </div>
@@ -33,6 +33,13 @@ export default {
   watch: {
     'value': function() {
       this.v = this.value;
+    }
+  },
+  computed: {
+    compiledMarkdown() {
+      if (this.v)
+        return (new MarkdownIt({breaks:true, linkify: true})).render(this.v);
+      return  this.placeholder;
     }
   },
   methods: {

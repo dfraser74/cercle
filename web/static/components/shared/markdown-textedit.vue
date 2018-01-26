@@ -2,10 +2,10 @@
   <div v-on-click-outside='cancelEdit'>
     <div v-show="editMode">
       <textarea v-model="rawText" v-autosize="rawText" class="card-textarea"  />
-      <button class="btn btn-success" v-on:click="updateValue">Save</button>
-      <a @click="cancelEdit">Cancel</a>
+      <el-button type="success" @click="updateValue" size="mini">Save</el-button>
+      <el-button type="text" size="mini" @click="cancelEdit">Cancel</el-button>
     </div>
-    <div v-html="compiledMarkdown" v-show="!editMode" @click="setEditMode" class="card-description-rendering" v-linkified></div>
+    <div v-html="compiledMarkdown" v-show="!editMode" @click="setEditMode" class="card-description-rendering"></div>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-      return this.rawText ? (new MarkdownIt({breaks:true})).render(this.rawText) : this.placeholder;
+      return this.rawText ? (new MarkdownIt({breaks:true, linkify: true})).render(this.rawText) : this.placeholder;
     }
   },
   methods: {

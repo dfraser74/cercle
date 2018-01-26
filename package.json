@@ -22,7 +22,6 @@
     "vue": "^2.5.13",
     "vue-autosize": "^1.0.0",
     "vue-drag-drop": "^0.2.2",
-    "vue-linkify": "^1.0.1",
     "vue-moment": "^2.1.0",
     "vue-on-click-outside": "^1.0.3",
     "vue-resource": "^1.2.1",
@@ -30,7 +29,7 @@
     "vue-router": "^3.0.1",
     "vue-select": "github:sagalbot/vue-select",
     "vue-strap": "^1.1.37",
-    "vue-template-compiler": "^2.5.13",
+    "vue-template-compiler": "2.5.13",
     "vue-truncate-filter": "^1.1.7",
     "vue-upload-component": "2.7.3",
     "vuedraggable": "^2.14.1"

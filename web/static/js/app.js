@@ -22,10 +22,8 @@ import moment from 'moment';
 
 import socket from './socket';
 import { directive as onClickOutside } from 'vue-on-click-outside';
-import linkify from 'vue-linkify';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-Vue.directive('linkified', linkify);
 Vue.directive('on-click-outside', onClickOutside);
 
 var VueTruncate = require('vue-truncate-filter');
