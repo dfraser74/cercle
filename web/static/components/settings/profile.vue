@@ -2,7 +2,7 @@
   <div>
     <div class="box box-primary">
 
-      <el-form :model="form" :rules="validateRules" ref="profileEditForm" label-width="120px"  :label-position="'top'" >
+      <el-form :model="form" :rules="validateRules" ref="profileEditForm" label-width="250px" >
         <div class="box-header with-border">
           <h3 class="box-title">Profile</h3>
         </div>
@@ -20,6 +20,23 @@
             <el-checkbox v-model="form.notification"></el-checkbox>
             Receive email notifications
           </label>
+        </el-form-item>
+
+        <el-form-item prop="notification_email_frequency" label="Notification Email Frequency" >
+            <el-select v-model="form.notificationEmailFrequency">
+              <el-option
+                style="height:45px;"
+                v-for="item in notificationEmailFrequency"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                <div style="line-height: 18px;height:45px;">
+                  <b>{{ item.label }}</b>
+                  <br />
+                  <span style="font-size: 80%;">{{ item.hint }}</span>
+                </div>
+            </el-option>
+            </el-select>
         </el-form-item>
 
         <el-form-item label="Email" prop="login">
@@ -64,6 +81,11 @@
     data() {
       return {
         timeZones: this.listTimeZones(),
+        notificationEmailFrequency: [
+          {value: 'never',  label: 'Never', hint: "Don’t send emails."},
+          {value: 'periodically', label: 'Periodically', hint: "Send emails about once an hour." },
+          {value: 'instantly' , label: 'Instantly', hint: "Send emails as soon as possible." }
+        ],
         previewImage: null,
         validateRules: {
           fullName: [],
@@ -75,7 +97,8 @@
           username: null,
           login: null,
           timeZone: null,
-          password: null
+          password: null,
+          notificationEmailFrequency: null
         }
       };
     },
@@ -107,6 +130,7 @@
             formData.append('user[notification]', this.form.notification);
             formData.append('user[login]', this.form.login);
             formData.append('user[time_zone]', this.form.timeZone);
+            formData.append('user[notification_email_frequency]', this.form.notificationEmailFrequency);
             if (!this.$_.isEmpty(this.form.password)) {
               formData.append('user[password]', this.form.password);
             }

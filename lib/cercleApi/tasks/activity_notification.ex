@@ -16,8 +16,10 @@ defmodule CercleApi.Tasks.ActivityNotification do
 
   def send_email(%CercleApi.Notification{notification_type: "start"} = item) do
     with target <- load_item(item),
-         false <- is_nil(target), false <- is_nil(target.due_date),
-           false <- is_nil(target.user), true <- target.user.notification  do
+         false <- is_nil(target),
+           false <- is_nil(target.due_date),
+           false <- is_nil(target.user),
+           true <- target.user.notification  do
       mail = %Mailman.Email{
         subject: "#{target_name(target)} is due now",
         from: "referral@cercle.co", to: [target.user.login],

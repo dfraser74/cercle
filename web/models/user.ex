@@ -6,7 +6,7 @@ defmodule CercleApi.User do
 
   use CercleApi.Web, :model
   use Arc.Ecto.Schema
-  alias CercleApi.{Repo, UserCompany}
+  alias CercleApi.{Repo, UserCompany, Enums}
   @derive {Poison.Encoder, only: [
               :id, :full_name, :profile_image
             ]}
@@ -21,6 +21,9 @@ defmodule CercleApi.User do
     field :profile_image, CercleApi.UserProfileImage.Type
     field :username, :string #is username
     field :time_zone, :string, default: "America/New_York"
+    field :notification_email_frequency,
+      Enums.NotificationEmailFrequency
+
     timestamps
 
     has_many :user_companies, CercleApi.UserCompany
@@ -43,7 +46,7 @@ defmodule CercleApi.User do
     model
     |> cast(params, [
           :login, :full_name, :password_reset_code,
-          :username, :time_zone, :notification])
+          :username, :time_zone, :notification, :notification_email_frequency])
     |> cast_attachments(params, [:profile_image])
     |> validate_required([:login])
     |> unique_constraint(:login)

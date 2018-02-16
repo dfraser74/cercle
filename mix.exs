@@ -73,7 +73,7 @@ defmodule CercleApi.Mixfile do
      {:ex_oauth2_provider, "~> 0.2.0"},
      {:scrivener, "~> 2.4"},
      {:scrivener_ecto, "~> 1.3"},
-
+     {:ecto_enum, "~> 1.1"},
      # dev
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:sobelow, "~> 0.3", only: [:dev]},

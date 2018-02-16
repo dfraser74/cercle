@@ -15,6 +15,7 @@ defmodule CercleApi.APIV2.UserProfileView do
       time_zone: user.time_zone,
       notification: user.notification,
       profile_image: nil,
+      notification_email_frequency: user.notification_email_frequency,
       profile_image_url: CercleApi.UserProfileImage.url({user.profile_image, user}, :small)
     }
   end
